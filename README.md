@@ -1,6 +1,6 @@
 # Schrodingers Cats Project - :atom_symbol: ATOMUS GAME :atom_symbol: 
 
-![Alt Text](https://media.giphy.com/media/3og0IV7MOCfnm85iRa/giphy-downsized-large.gif)
+![Alt Text](https://d2r55xnwy6nx47.cloudfront.net/uploads/2020/12/Physics_1220_Social.jpg)
 
 ### Schrodinger's Cats created game about simulation of interesting process between atoms :smiley_cat:
 
