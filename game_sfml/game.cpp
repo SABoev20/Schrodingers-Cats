@@ -4,7 +4,7 @@
 
 void game::init_window()
 {
-	this->window = new sf::RenderWindow(sf::VideoMode(window_w, window_h), "GAME", sf::Style::Fullscreen);
+	this->window = new sf::RenderWindow(sf::VideoMode(window_w, window_h), "Àtomus", sf::Style::Fullscreen);
 	this->window->setFramerateLimit(80);
 }
 
