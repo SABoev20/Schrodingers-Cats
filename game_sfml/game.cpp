@@ -4,52 +4,18 @@
 
 void game::init_window()
 {
-	this->window = new sf::RenderWindow(sf::VideoMode(window_w, window_h), "GAME");
+	this->window = new sf::RenderWindow(sf::VideoMode(window_w, window_h), "GAME", sf::Style::Fullscreen);
 	this->window->setFramerateLimit(80);
 }
 
 void game::initPLayer()
 {
-	this->pshape.setSize(sf::Vector2f(this->playerSize, this->playerSize));
+	this->playerSize = constplayerSize;
+	this->pshape.setSize(sf::Vector2f(this->constplayerSize, this->constplayerSize));
 	this->player_texture.loadFromFile("assets/player.png");
 	this->player_texture.setSmooth(true);
 	this->pshape.setTexture(&player_texture);
 	this->pshape.setPosition((this->window_w / 2) - (this->playerSize / 2), (this->window_h / 2) - (this->playerSize / 2));
-}
-
-void game::player_animation()
-{
-	this->elapsed = this->clock.getElapsedTime();
-	if (this->elapsed.asSeconds() >= this->timeCount)
-	{
-		this->timeCount++;
-		if (this->player_frame == 1)
-		{
-			this->player_texture.loadFromFile("assets/frame1.png");
-			this->player_texture.setSmooth(true);
-			this->pshape.setTexture(&player_texture);
-		}
-		else if (this->player_frame == 2)
-		{
-			this->player_texture.loadFromFile("assets/frame2.png");
-			this->player_texture.setSmooth(true);
-			this->pshape.setTexture(&player_texture);
-		}
-		if (this->player_frame == 3)
-		{
-			this->player_texture.loadFromFile("assets/frame3.png");
-			this->player_texture.setSmooth(true);
-			this->pshape.setTexture(&player_texture);
-		}
-		if (this->player_frame == 4)
-		{
-			this->player_texture.loadFromFile("assets/frame2.png");
-			this->player_texture.setSmooth(true);
-			this->pshape.setTexture(&player_texture);
-		}
-		this->player_frame++;
-		if (this->player_frame > 4) this->player_frame = 1;
-	}
 }
 
 int game::randomNum(int n)
@@ -138,6 +104,27 @@ void game::init_enemies()
 		eshape8 = returnEnemy();
 		eshape9 = returnEnemy();
 		eshape10 = returnEnemy();
+
+		this->antieshape_texture.loadFromFile("assets/antichastica.png");
+		this->antieshape_texture.setSmooth(true);
+
+		antieshape1.setSize(sf::Vector2f(this->enemiesSize, this->enemiesSize));
+		antieshape2.setSize(sf::Vector2f(this->enemiesSize, this->enemiesSize));
+		antieshape3.setSize(sf::Vector2f(this->enemiesSize, this->enemiesSize));
+		antieshape4.setSize(sf::Vector2f(this->enemiesSize, this->enemiesSize));
+		antieshape5.setSize(sf::Vector2f(this->enemiesSize, this->enemiesSize));
+
+		antieshape1.setTexture(&antieshape_texture);
+		antieshape2.setTexture(&antieshape_texture);
+		antieshape3.setTexture(&antieshape_texture);
+		antieshape4.setTexture(&antieshape_texture);
+		antieshape5.setTexture(&antieshape_texture);
+
+		antieshape1.setPosition(randomNum(this->window_w), randomNum(this->window_h));
+		antieshape2.setPosition(randomNum(this->window_w), randomNum(this->window_h));
+		antieshape3.setPosition(randomNum(this->window_w), randomNum(this->window_h));
+		antieshape4.setPosition(randomNum(this->window_w), randomNum(this->window_h));
+		antieshape5.setPosition(randomNum(this->window_w), randomNum(this->window_h));
 }
 
 void game::move_enemies()
@@ -166,13 +153,24 @@ void game::move_enemies()
 		eshape9 = checkBounds(eshape9);
 		this->eshape10 = randomMove(eshape10);
 		eshape10 = checkBounds(eshape10);
+
+		this->antieshape1 = randomMove(antieshape1);
+		this->antieshape1 = checkBounds(antieshape1);
+		this->antieshape2 = randomMove(antieshape2);
+		this->antieshape2 = checkBounds(antieshape2);
+		this->antieshape3 = randomMove(antieshape3);
+		this->antieshape3 = checkBounds(antieshape3);
+		this->antieshape4 = randomMove(antieshape4);
+		this->antieshape4 = checkBounds(antieshape4);
+		this->antieshape5 = randomMove(antieshape5);
+		this->antieshape5 = checkBounds(antieshape5);
 	}
 }
 
 void game::checkRender(sf::RectangleShape shape)
 {
 	int x = shape.getPosition().x;
-	if (x != 2000)
+	if (x != numIfNuclearFusion)
 	{
 		this->window->draw(shape);
 	}
@@ -190,69 +188,99 @@ void game::render_enemies()
 		checkRender(eshape8);
 		checkRender(eshape9);
 		checkRender(eshape10);
+		checkRender(antieshape1);
+		checkRender(antieshape2);
+		checkRender(antieshape3);
+		checkRender(antieshape4);
+		checkRender(antieshape5);
 }
 
 void game::nuclearFusion()
 {
 	if (checkObjectsContact(pshape, eshape1) and enemiesTextures[0] >= 3)
 	{
-		eshape1.setPosition(2000, 0);
+		eshape1.setPosition(numIfNuclearFusion, 0);
 		playerSize += 5;
 		pshape.setSize(sf::Vector2f(playerSize, playerSize));
 	}
 	else if (checkObjectsContact(pshape, eshape2) and enemiesTextures[1] >= 3)
 	{
-		eshape2.setPosition(2000, 0);
+		eshape2.setPosition(numIfNuclearFusion, 0);
 		playerSize += 5;
 		pshape.setSize(sf::Vector2f(playerSize, playerSize));
 	}
 	else if (checkObjectsContact(pshape, eshape3) and enemiesTextures[2] >= 3)
 	{
-		eshape3.setPosition(2000, 0);
+		eshape3.setPosition(numIfNuclearFusion, 0);
 		playerSize += 5;
 		pshape.setSize(sf::Vector2f(playerSize, playerSize));
 	}
 	else if (checkObjectsContact(pshape, eshape4) and enemiesTextures[3] >= 3)
 	{
-		eshape4.setPosition(2000, 0);
+		eshape4.setPosition(numIfNuclearFusion, 0);
 		playerSize += 5;
 		pshape.setSize(sf::Vector2f(playerSize, playerSize));
 	}
 	else if (checkObjectsContact(pshape, eshape5) and enemiesTextures[4] >= 3)
 	{
-		eshape5.setPosition(2000, 0);
+		eshape5.setPosition(numIfNuclearFusion, 0);
 		playerSize += 5;
 		pshape.setSize(sf::Vector2f(playerSize, playerSize));
 	}
 	else if (checkObjectsContact(pshape, eshape6) and enemiesTextures[5] >= 3)
 	{
-		eshape6.setPosition(2000, 0);
+		eshape6.setPosition(numIfNuclearFusion, 0);
 		playerSize += 5;
 		pshape.setSize(sf::Vector2f(playerSize, playerSize));
 	}
 	else if (checkObjectsContact(pshape, eshape7) and enemiesTextures[6] >= 3)
 	{
-		eshape7.setPosition(2000, 0);
+		eshape7.setPosition(numIfNuclearFusion, 0);
 		playerSize += 5;
 		pshape.setSize(sf::Vector2f(playerSize, playerSize));
 	}
 	else if (checkObjectsContact(pshape, eshape8) and enemiesTextures[7] >= 3)
 	{
-		eshape8.setPosition(2000, 0);
+		eshape8.setPosition(numIfNuclearFusion, 0);
 		playerSize += 5;
 		pshape.setSize(sf::Vector2f(playerSize, playerSize));
 	}
 	else if (checkObjectsContact(pshape, eshape9) and enemiesTextures[8] >= 3)
 	{
-		eshape9.setPosition(2000, 0);
+		eshape9.setPosition(numIfNuclearFusion, 0);
 		playerSize += 5;
 		pshape.setSize(sf::Vector2f(playerSize, playerSize));
 	}
 	else if (checkObjectsContact(pshape, eshape10) and enemiesTextures[9] >= 3)
 	{
-		eshape10.setPosition(2000, 0);
+		eshape10.setPosition(numIfNuclearFusion, 0);
 		playerSize += 5;
 		pshape.setSize(sf::Vector2f(playerSize, playerSize));
+	}
+	else if (checkObjectsContact(pshape, antieshape1))
+	{
+		antieshape1.setPosition(numIfNuclearFusion, 0);
+		pshape.setPosition(numIfNuclearFusion, 0);
+	}
+	else if (checkObjectsContact(pshape, antieshape2))
+	{
+		antieshape2.setPosition(numIfNuclearFusion, 0);
+		pshape.setPosition(numIfNuclearFusion, 0);
+	}
+	else if (checkObjectsContact(pshape, antieshape3))
+	{
+		antieshape3.setPosition(numIfNuclearFusion, 0);
+		pshape.setPosition(numIfNuclearFusion, 0);
+	}
+	else if (checkObjectsContact(pshape, antieshape4))
+	{
+		antieshape4.setPosition(numIfNuclearFusion, 0);
+		pshape.setPosition(numIfNuclearFusion, 0);
+	}
+	else if (checkObjectsContact(pshape, antieshape5))
+	{
+		antieshape5.setPosition(numIfNuclearFusion, 0);
+		pshape.setPosition(numIfNuclearFusion, 0);
 	}
 }
 
@@ -260,7 +288,6 @@ void game::electron_shoot()
 {
 	if (ifElectronMove != 0)
 	{
-		
 		if (checkObjectsContact(electron, eshape1))
 		{
 			ifElectronMove = 0;
@@ -432,6 +459,31 @@ void game::electron_shoot()
 				eshape10.setTexture(&enemy10_texture);
 			}
 		}
+		if (checkObjectsContact(electron, antieshape1))
+		{
+			ifElectronMove = 0;
+			antieshape1.setPosition(2000, 0);
+		}
+		if (checkObjectsContact(electron, antieshape2))
+		{
+			ifElectronMove = 0;
+			antieshape2.setPosition(2000, 0);
+		}
+		if (checkObjectsContact(electron, antieshape3))
+		{
+			ifElectronMove = 0;
+			antieshape3.setPosition(2000, 0);
+		}
+		if (checkObjectsContact(electron, antieshape4))
+		{
+			ifElectronMove = 0;
+			antieshape4.setPosition(2000, 0);
+		}
+		if (checkObjectsContact(electron, antieshape5))
+		{
+			ifElectronMove = 0;
+			antieshape5.setPosition(2000, 0);
+		}
 		
 
 		if(this->electron.getPosition().x > window_w or this->electron.getPosition().y > window_h
@@ -554,7 +606,7 @@ sf::RectangleShape game::checkBounds(sf::RectangleShape shape)
 
 void game::playerMove()
 {
-	if (this->window->hasFocus())
+	if (this->window->hasFocus() and pshape.getPosition().x != numIfNuclearFusion)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
 		{
@@ -603,19 +655,14 @@ void game::setBackground()
 	this->backgroundTexture.loadFromFile("assets/background.png");
 
 	this->backgroundSprite.setTexture(backgroundTexture);
-	this->backgroundSprite.setScale(window_w / backgroundSprite.getGlobalBounds().width, window_h / backgroundSprite.getGlobalBounds().height);
 }
 
 void game::render()
 {
 	this->window->clear();
 	this->window->draw(this->backgroundSprite);
-	this->window->draw(this->pshape);
+	if(pshape.getPosition().x != numIfNuclearFusion) this->window->draw(this->pshape);
 	render_enemies();
-	/*this->window->clear();*/
-	this->window->draw(this->backgroundSprite);
-	render_enemies();
-	this->window->draw(this->pshape);
 	electron_shoot();
 	this->window->display();
 }
@@ -623,7 +670,7 @@ void game::render()
 
 void game::update()
 {
-	this->game::pollEvents();
+	pollEvents();
 	move_enemies();
 	playerMove();
 	move_enemies();
@@ -637,10 +684,18 @@ game::game()
 	initPLayer();
 	setBackground();
 	init_enemies();
+	this->backgroundSprite.setScale(window_w / backgroundSprite.getGlobalBounds().width, window_h / backgroundSprite.getGlobalBounds().height);
 
 	this->electron.setSize(sf::Vector2f(12, 10));
 	this->electron_texture.loadFromFile("assets/elec.png");
 	this->electron.setTexture(&electron_texture);
+	
+	font.loadFromFile("editundo.ttf");
+	text.setFont(font);
+	std::string c = "Shoot at atoms and absorb the blue ones\n\nW, A, S, D to move\nQ + W, A, S, D to move with higher speed\nE + W, A, S, D to shoot\n\nPRESS ESC TO EXIT THE GAME\n\nPRESS ENTER TO START THE GAME";
+	text.setString(c);
+	text.setCharacterSize(30);
+	text.setPosition(window_w / 2-280, window_h / 2-120);
 }
 
 game::~game()
@@ -650,9 +705,49 @@ game::~game()
 
 void game::Start()
 {
-	while (running())
-	{
-		update();
-		render();
-	}
+		while (running())
+		{
+			if (ready)
+			{
+				update();
+				render();
+				if (pshape.getPosition().x == 2000)
+				{
+					initPLayer();
+					setBackground();
+					init_enemies();
+					for (int i = 0; i < 10; i++)
+					{
+						enemiesTextures[i] = 1;
+					}
+				}
+				if (eshape1.getPosition().x == 2000 and eshape2.getPosition().x == 2000 and eshape3.getPosition().x == 2000
+					and eshape4.getPosition().x == 2000 and eshape5.getPosition().x == 2000 and eshape6.getPosition().x == 2000
+					and eshape7.getPosition().x == 2000 and eshape8.getPosition().x == 2000 and eshape9.getPosition().x == 2000
+					and eshape10.getPosition().x == 2000 and antieshape1.getPosition().x == 2000 and antieshape2.getPosition().x == 2000
+					and antieshape3.getPosition().x == 2000 and antieshape4.getPosition().x == 2000 and antieshape5.getPosition().x == 2000)
+				{
+					initPLayer();
+					setBackground();
+					init_enemies();
+					for (int i = 0; i < 10; i++)
+					{
+						enemiesTextures[i] = 1;
+					}
+				}
+			}
+			else {
+				pollEvents();
+				if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
+				{
+					ready = 1;
+				}
+				this->window->draw(this->backgroundSprite);
+				this->window->draw(text);
+				this->window->display();
+				clock.restart();
+			}
+			
+		}
+	
 };

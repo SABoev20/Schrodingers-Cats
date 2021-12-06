@@ -18,7 +18,8 @@ private:
 	const int window_h = 720;
 	// Set players speed, counter for change texture and initial size
 	float player_speed = 3;
-	int playerSize = 60;
+	const int constplayerSize = 60;
+	int playerSize = constplayerSize;
 	int player_frame = 1;
 	sf::RenderWindow* window; // window object
 
@@ -47,6 +48,13 @@ private:
 	sf::Texture enemy9_texture;
 	sf::Texture enemy10_texture;
 	sf::Texture enemies_texture;
+
+	sf::RectangleShape antieshape1;
+	sf::RectangleShape antieshape2;
+	sf::RectangleShape antieshape3;
+	sf::RectangleShape antieshape4;
+	sf::RectangleShape antieshape5;
+	sf::Texture antieshape_texture;
 
 	float enemiesSize = 60;
 
@@ -79,6 +87,9 @@ private:
 	// Arrays with values of enemies textures
 	int enemiesTextures[10] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
 	sf::Text text;
+	sf::Font font;
+
+	bool ready = 0;
 
 public:
 
@@ -93,7 +104,6 @@ public:
 	void render(); // Main function to render objects every iteration
 	sf::RectangleShape checkBounds(sf::RectangleShape shape); // Function to limit position
 	void setBackground(); // Function to display background
-	void player_animation(); // Function for animating players texture
 	void init_enemies(); // Function to set random positions of enemies
 	int randomNum(int n); // Function for returning random value
 	void move_enemies(); // Function for random moving enemies
