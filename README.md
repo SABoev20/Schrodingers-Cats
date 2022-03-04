@@ -1,4 +1,4 @@
-# Schrodingers Cats Project - :atom_symbol: ATOMUS GAME :atom_symbol: 
+# Schrodingers Cats Project - :atom_symbol: [ATOMUS GAME](/SABoev20/Schrodingers-Cats/raw/main/Atomus.exe) :atom_symbol: 
 
 ![Alt Text](https://d2r55xnwy6nx47.cloudfront.net/uploads/2020/12/Physics_1220_Social.jpg)
 
